@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Landing extends StatelessWidget {
-  const Landing({super.key});
+class LandingScreen extends StatelessWidget {
+  const LandingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +11,8 @@ class Landing extends StatelessWidget {
       children: [
         //transparent can be done by opacity but performance intensive
         Image.asset(
-          'assets/images/quiz-logo.png',
+          'assets/images/flower.png',
           width: 300,
-          color: const Color.fromARGB(148, 232, 227, 227),
         ),
 
         const SizedBox(
@@ -21,11 +20,12 @@ class Landing extends StatelessWidget {
         ),
 
         const Text(
-          'Learn Flutter the fun way!',
+          '   We deliver\nplants at your\n   door step',
           style: TextStyle(
-            fontSize: 20,
-            color: Color.fromARGB(255, 137, 123, 225),
-          ),
+              fontSize: 30,
+              color: Color.fromARGB(255, 22, 22, 22),
+              letterSpacing: 4,
+              fontWeight: FontWeight.bold),
         ),
 
         const SizedBox(
@@ -39,8 +39,11 @@ class Landing extends StatelessWidget {
             foregroundColor: Colors.white,
             backgroundColor: const Color.fromARGB(255, 126, 106, 215),
           ),
-          icon: const Icon(Icons.quiz_outlined),
-          label: const Text('Start Quiz'),
+          icon: const Icon(Icons.arrow_forward),
+          label: const Text(
+            'Buy',
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       ],
     ));
