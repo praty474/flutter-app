@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz/screens/landing_screen.dart';
+import 'package:quiz/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
                 Color.fromARGB(255, 255, 225, 225),
               ], begin: Alignment.topCenter),
             ),
-            child: const LandingScreen()),
+            child: const SplashScreen()),
       ),
     );
   }
