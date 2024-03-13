@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:quiz/models/news_channels_headlines_model.dart';
+import 'package:quiz/screens/categories_screen.dart';
 import 'package:quiz/view_model/news_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,10 +15,15 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+enum FilterList { bbc, cnn, aryNews, independent, aljazeera, reuters }
+
 class _HomeScreenState extends State<HomeScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
 
+  FilterList? selectedMenu;
+
   final format = DateFormat('MMMM dd, yyyy');
+  String name = 'bbc-news';
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
@@ -28,13 +32,51 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset('assets/images/category_icon.png'),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CategoriesScreen()));
+          },
+          icon: const Icon(
+            Icons.menu,
+            size: 40,
+          ),
         ),
         title: Text(
           'News',
           style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          PopupMenuButton<FilterList>(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.black,
+            ),
+            onSelected: (FilterList item) {
+              if (FilterList.bbc.name == item) {
+                name = 'bbc-news';
+              }
+              if (FilterList.aryNews.name == item) {
+                name = 'ary-news';
+              }
+              setState(() {
+                selectedMenu = item;
+              });
+            },
+            initialValue: selectedMenu,
+            itemBuilder: (BuildContext context) => <PopupMenuItem<FilterList>>[
+              const PopupMenuItem<FilterList>(
+                  value: FilterList.bbc, child: Text('BBC News')),
+              const PopupMenuItem<FilterList>(
+                  value: FilterList.aryNews, child: Text('Ary News')),
+              // const PopupMenuItem<FilterList>(
+              //     value: FilterList.bbc, child: Text('CNN')),
+              // const PopupMenuItem<FilterList>(
+              //     value: FilterList.bbc, child: Text('Independent')),
+              // const PopupMenuItem<FilterList>(
+              //     value: FilterList.bbc, child: Text('Reuters')),
+            ],
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -45,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
               future: newsViewModel.fetchNewsChannelHeadlinesApi(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: SpinKitCircle(
                       size: 40,
                       color: Colors.amber,
@@ -98,12 +140,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 bottom: 20,
                                 child: Card(
                                   elevation: 5,
-                                  color: Color.fromARGB(255, 252, 233, 233),
+                                  color:
+                                      const Color.fromARGB(255, 252, 233, 233),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12)),
                                   child: Container(
                                     alignment: Alignment.bottomCenter,
-                                    padding: EdgeInsets.all(15),
+                                    padding: const EdgeInsets.all(15),
                                     height: height * .22,
                                     child: Column(
                                       mainAxisAlignment:
@@ -124,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Container(
                                           width: width * 0.7,
                                           child: Row(
