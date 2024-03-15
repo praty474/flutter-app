@@ -21,7 +21,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   FilterList? selectedMenu;
 
   final format = DateFormat('MMMM dd, yyyy');
-  String categoryName = 'general';
+  String categoryName = 'bitcoin';
 
   List<String> categoriesList = [
     'General',
@@ -81,25 +81,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             Expanded(
               child: FutureBuilder<CategoryNewsModel>(
-                future: newsViewModel.fetchCategoriesNewsApi(categoryName),
-                builder: (BuildContext context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: SpinKitCircle(
-                        size: 40,
-                        color: Colors.amber,
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  } else if (snapshot.data == null ||
-                      snapshot.data!.articles == null) {
-                    return Center(
-                      child: Text('No data available'),
-                    );
-                  } else {
+                  future: newsViewModel.fetchCategoriesNewsApi(categoryName),
+                  builder: (BuildContext context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: SpinKitCircle(
+                          size: 40,
+                          color: Colors.amber,
+                        ),
+                      );
+                    }
+
                     return ListView.builder(
                       itemCount: snapshot.data!.articles!.length,
                       scrollDirection: Axis.horizontal,
@@ -132,9 +124,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         );
                       },
                     );
-                  }
-                },
-              ),
+                  }),
             ),
           ],
         ),
