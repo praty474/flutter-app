@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
   final String newImage,
@@ -26,10 +29,13 @@ class NewsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
+  final format = DateFormat('MMMM dd, yyyy');
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
     final width = MediaQuery.sizeOf(context).width * 1;
+    DateTime dateTime = DateTime.parse(widget.newsDate);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -51,9 +57,63 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             height: height * .6,
             margin: EdgeInsets.only(top: height * .4),
             padding: EdgeInsets.only(right: 20, left: 20, top: 20),
-            color: Colors.white,
-            child: ListView(
-              children: [Text(widget.description)],
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(40)),
+            ),
+            child: Center(
+              child: ListView(
+                children: [
+                  Text(
+                    widget.newsTitle,
+                    style: GoogleFonts.poppins(
+                        fontSize: 20,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: height * .02,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.source,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Text(
+                        format.format(dateTime),
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * .03,
+                  ),
+                  Text(
+                    widget.description,
+                    style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: height * .03,
+                  ),
+
+                  Text(
+                    widget.content
+                  )
+                ],
+              ),
             ),
           ),
         ],

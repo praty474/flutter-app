@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -96,157 +97,179 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 } else {
                   return ListView.builder(
-                      itemCount: snapshot.data!.articles!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        DateTime dateTime = DateTime.parse(snapshot
-                            .data!.articles![index].publishedAt
-                            .toString());
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewsDetailsScreen(
-                                    newImage: snapshot
-                                        .data!.articles![index].url
-                                        .toString(),
-                                    newsTitle: snapshot
-                                        .data!.articles![index].title
-                                        .toString(),
-                                    newsDate: snapshot
-                                        .data!.articles![index].publishedAt
-                                        .toString(),
-                                    author: snapshot
-                                        .data!.articles![index].author
-                                        .toString(),
-                                    description: snapshot
-                                        .data!.articles![index].description
-                                        .toString(),
-                                    content: snapshot
-                                        .data!.articles![index].content
-                                        .toString(),
-                                    source: snapshot
-                                        .data!.articles![index].source
-                                        .toString(),
+                    itemCount: snapshot.data!.articles!.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      DateTime dateTime = DateTime.parse(snapshot
+                          .data!.articles![index].publishedAt
+                          .toString());
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewsDetailsScreen(
+                                  newImage: snapshot.data!.articles![index].url
+                                      .toString(),
+                                  newsTitle: snapshot
+                                      .data!.articles![index].title
+                                      .toString(),
+                                  newsDate: snapshot
+                                      .data!.articles![index].publishedAt
+                                      .toString(),
+                                  author: snapshot.data!.articles![index].author
+                                      .toString(),
+                                  description: snapshot
+                                      .data!.articles![index].description
+                                      .toString(),
+                                  content: snapshot
+                                      .data!.articles![index].content
+                                      .toString(),
+                                  source: snapshot
+                                      .data!.articles![index].source!.name
+                                      .toString(),
+                                ),
+                              ));
+                        },
+                        child: SizedBox(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                height: height * 0.6,
+                                width: width * 0.9,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: height * 0.02),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  // child: CachedNetworkImage(
+                                  //   imageUrl: snapshot
+                                  //       .data!.articles![index].urlToImage
+                                  //       .toString(),
+                                  //   fit: BoxFit.cover,
+                                  //   placeholder: (context, url) =>
+                                  //       const SizedBox(child: spinKit2),
+                                  //   errorWidget: (context, url, error) =>
+                                  //       const Icon(
+                                  //     Icons.error_outline,
+                                  //     color: Colors.red,
+                                  //   ),
+                                  // ),
+                                  child: Image.asset(
+                                    'assets/images/flower.png',
                                   ),
-                                ));
-                          },
-                          child: SizedBox(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: height * 0.6,
-                                  width: width * 0.9,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: height * 0.02),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    // child: CachedNetworkImage(
-                                    //   imageUrl: snapshot
-                                    //       .data!.articles![index].urlToImage
-                                    //       .toString(),
-                                    //   fit: BoxFit.cover,
-                                    //   placeholder: (context, url) =>
-                                    //       const SizedBox(child: spinKit2),
-                                    //   errorWidget: (context, url, error) =>
-                                    //       const Icon(
-                                    //     Icons.error_outline,
-                                    //     color: Colors.red,
-                                    //   ),
-                                    // ),
-                                    child: Image.asset(
-                                      'assets/images/flower.png',
-                                    ),
 
-                                    // child: ExtendedImage.network(
-                                    //   snapshot.data!.articles![index].urlToImage
-                                    //       .toString(),
-                                    //   fit: BoxFit.fill,
-                                    // ),
-                                  ),
+                                  // child: ExtendedImage.network(
+                                  //   snapshot.data!.articles![index].urlToImage
+                                  //       .toString(),
+                                  //   fit: BoxFit.fill,
+                                  // ),
                                 ),
-                                Positioned(
-                                  bottom: 20,
-                                  child: Card(
-                                    elevation: 5,
-                                    color: const Color.fromARGB(
-                                        255, 252, 233, 233),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Container(
-                                      alignment: Alignment.bottomCenter,
-                                      padding: const EdgeInsets.all(15),
-                                      height: height * .22,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: width * 0.7,
-                                            child: Text(
-                                              snapshot
-                                                  .data!.articles![index].title
-                                                  .toString(),
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                              ),
+                              Positioned(
+                                bottom: 20,
+                                child: Card(
+                                  elevation: 5,
+                                  color:
+                                      const Color.fromARGB(255, 252, 233, 233),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  child: Container(
+                                    alignment: Alignment.bottomCenter,
+                                    padding: const EdgeInsets.all(15),
+                                    height: height * .22,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: width * 0.7,
+                                          child: Text(
+                                            snapshot
+                                                .data!.articles![index].title
+                                                .toString(),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          const Spacer(),
-                                          Container(
-                                            width: width * 0.7,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  snapshot
-                                                      .data!
-                                                      .articles![index]
-                                                      .source!
-                                                      .name
-                                                      .toString(),
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                                Text(
-                                                  format.format(dateTime),
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                        const Spacer(),
+                                        Container(
+                                          width: width * 0.7,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                snapshot.data!.articles![index]
+                                                    .source!.name
+                                                    .toString(),
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                              Text(
+                                                format.format(dateTime),
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        );
-                      });
+                        ),
+                      );
+                    },
+                  );
                 }
               },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: height * 0.3,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset('assets/images/free-nature-images.jpg',
+                          height: height * 0.2,
+                          width: width * 0.3,
+                          fit: BoxFit.cover),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Hello',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
             ),
           )
         ],
