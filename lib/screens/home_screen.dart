@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -156,8 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   //   ),
                                   // ),
                                   child: Image.asset(
-                                    'assets/images/flower.png',
-                                  ),
+                                      'assets/images/free-nature-images.jpg',
+                                      height: height * 0.2,
+                                      width: width * 0.3,
+                                      fit: BoxFit.cover),
 
                                   // child: ExtendedImage.network(
                                   //   snapshot.data!.articles![index].urlToImage
@@ -208,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 snapshot.data!.articles![index]
                                                     .source!.name
                                                     .toString(),
-                                                maxLines: 3,
+                                                maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14,
@@ -245,32 +248,86 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: const EdgeInsets.all(10),
             height: height * 0.3,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset('assets/images/free-nature-images.jpg',
-                          height: height * 0.2,
-                          width: width * 0.3,
-                          fit: BoxFit.cover),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Hello',
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.poppins(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+            child: FutureBuilder<NewsChannelsHeadlinesModel>(
+                future: newsViewModel.fetchNewsChannelHeadlinesApi(),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SpinKitCircle(
+                        size: 40,
+                        color: Colors.amber,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.articles!.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          DateTime dateTime = DateTime.parse(snapshot
+                              .data!.articles![index].publishedAt
+                              .toString());
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                        'assets/images/free-nature-images.jpg',
+                                        height: height * 0.2,
+                                        width: width * 0.3,
+                                        fit: BoxFit.cover),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    height: height * 0.2,
+                                    width: width * .6,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          snapshot.data!.articles![index].title
+                                              .toString(),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        snapshot.data!.articles![index].title
+                                            .toString(),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        snapshot.data!.articles![index].title
+                                            .toString(),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              )
+                            ],
+                          );
+                        });
+                  }
+                }),
           )
         ],
       ),
