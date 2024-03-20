@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -143,24 +145,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     horizontal: height * 0.02),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
-                                  // child: CachedNetworkImage(
-                                  //   imageUrl: snapshot
-                                  //       .data!.articles![index].urlToImage
-                                  //       .toString(),
-                                  //   fit: BoxFit.cover,
-                                  //   placeholder: (context, url) =>
-                                  //       const SizedBox(child: spinKit2),
-                                  //   errorWidget: (context, url, error) =>
-                                  //       const Icon(
-                                  //     Icons.error_outline,
-                                  //     color: Colors.red,
-                                  //   ),
-                                  // ),
-                                  child: Image.asset(
-                                      'assets/images/free-nature-images.jpg',
-                                      height: height * 0.2,
-                                      width: width * 0.3,
-                                      fit: BoxFit.cover),
+                                  child: CachedNetworkImage(
+                                    imageUrl: snapshot
+                                        .data!.articles![index].urlToImage
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const SizedBox(child: spinKit2),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  // child: Image.asset(
+                                  //     'assets/images/free-nature-images.jpg',
+                                  //     height: height * 0.2,
+                                  //     width: width * 0.3,
+                                  //     fit: BoxFit.cover),
 
                                   // child: ExtendedImage.network(
                                   //   snapshot.data!.articles![index].urlToImage
@@ -280,44 +282,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Spacer(),
                                   Container(
+                                    padding: EdgeInsets.all(10),
                                     height: height * 0.2,
                                     width: width * .6,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          snapshot.data!.articles![index].title
-                                              .toString(),
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                    child: Expanded(
+                                      child: Container(
+                                        child: Column(children: [
+                                          Text(
+                                            snapshot
+                                                .data!.articles![index].title
+                                                .toString(),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  snapshot
+                                                      .data!
+                                                      .articles![index]
+                                                      .source!
+                                                      .name
+                                                      .toString(),
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ]),
+                                      ),
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        snapshot.data!.articles![index].title
-                                            .toString(),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        snapshot.data!.articles![index].title
-                                            .toString(),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )
                                 ],
                               ),
                               SizedBox(
