@@ -268,67 +268,109 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateTime dateTime = DateTime.parse(snapshot
                               .data!.articles![index].publishedAt
                               .toString());
-                          return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                        'assets/images/free-nature-images.jpg',
-                                        height: height * 0.2,
-                                        width: width * 0.3,
-                                        fit: BoxFit.cover),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    height: height * 0.2,
-                                    width: width * .6,
-                                    child: Expanded(
-                                      child: Container(
-                                        child: Column(children: [
-                                          Text(
-                                            snapshot
-                                                .data!.articles![index].title
-                                                .toString(),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          Spacer(),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  snapshot
-                                                      .data!
-                                                      .articles![index]
-                                                      .source!
-                                                      .name
-                                                      .toString(),
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NewsDetailsScreen(
+                                      newImage: snapshot
+                                          .data!.articles![index].url
+                                          .toString(),
+                                      newsTitle: snapshot
+                                          .data!.articles![index].title
+                                          .toString(),
+                                      newsDate: snapshot
+                                          .data!.articles![index].publishedAt
+                                          .toString(),
+                                      author: snapshot
+                                          .data!.articles![index].author
+                                          .toString(),
+                                      description: snapshot
+                                          .data!.articles![index].description
+                                          .toString(),
+                                      content: snapshot
+                                          .data!.articles![index].content
+                                          .toString(),
+                                      source: snapshot
+                                          .data!.articles![index].source!.name
+                                          .toString(),
+                                    ),
+                                  ));
+                            },
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(
+                                          'assets/images/free-nature-images.jpg',
+                                          height: height * 0.2,
+                                          width: width * 0.3,
+                                          fit: BoxFit.cover),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                          top: 10, bottom: 10, right: 10),
+                                      height: height * 0.2,
+                                      width: width * .6,
+                                      child: Expanded(
+                                        child: Container(
+                                          child: Column(children: [
+                                            Text(
+                                              snapshot
+                                                  .data!.articles![index].title
+                                                  .toString(),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            Spacer(),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    snapshot
+                                                        .data!
+                                                        .articles![index]
+                                                        .source!
+                                                        .name
+                                                        .toString(),
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ]),
+                                                Text(
+                                                  format.format(dateTime),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            )
+                                          ]),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              )
-                            ],
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.01,
+                                )
+                              ],
+                            ),
                           );
                         });
                   }
