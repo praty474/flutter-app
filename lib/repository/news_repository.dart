@@ -21,7 +21,9 @@ class NewsRepository {
 
   Future<CategoryNewsModel> fetchCategoriesNewsApi(String category) async {
     String url =
-        'https://newsapi.org/v2/everything?q=${'category'}&apiKey=5c5afad730af41eca231d3cf266ec413';
+        'https://newsapi.org/v2/everything?q=${category}&apiKey=5c5afad730af41eca231d3cf266ec413';
+
+    // 'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=5c5afad730af41eca231d3cf266ec413';
 
     final response = await http.get(Uri.parse(url));
 

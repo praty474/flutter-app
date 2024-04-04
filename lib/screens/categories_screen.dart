@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,15 +22,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   FilterList? selectedMenu;
 
   final format = DateFormat('MMMM dd, yyyy');
-  String categoryName = 'bitcoin';
+  String category = 'general';
 
   List<String> categoriesList = [
-    'General',
-    'Entertainment',
-    'Health',
-    'Sports',
-    'Technology',
-    'Business'
+    'general',
+    'entertainment',
+    'health',
+    'sports',
+    'technology',
+    'business'
   ];
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     return InkWell(
                       splashColor: Colors.white,
                       onTap: () {
-                        categoryName = categoriesList[index];
+                        category = categoriesList[index];
                         setState(() {});
                       },
                       child: Padding(
@@ -59,7 +60,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(15),
-                            color: categoryName == categoriesList[index]
+                            color: category == categoriesList[index]
                                 ? Colors.blue
                                 : Colors.grey,
                           ),
@@ -81,7 +82,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             Expanded(
               child: FutureBuilder<CategoryNewsModel>(
-                  future: newsViewModel.fetchCategoriesNewsApi(categoryName),
+                  future: newsViewModel.fetchCategoriesNewsApi(category),
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -103,9 +104,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.asset(
-                                'assets/images/flower.png',
-                                height: height * .2,
+                              child: CachedNetworkImage(
+                                imageUrl: snapshot
+                                    .data!.articles![index].urlToImage
+                                    .toString(),
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    const SizedBox(child: spinKit2),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                ),
                               ),
                             ),
                             Expanded(

@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -47,8 +48,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(40)),
-              child: Image.asset(
-                'assets/images/free-nature-images.jpg',
+              child: CachedNetworkImage(
+                imageUrl: widget.newImage,
                 fit: BoxFit.cover,
               ),
             ),
@@ -108,10 +109,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   SizedBox(
                     height: height * .03,
                   ),
-
-                  Text(
-                    widget.content
-                  )
+                  Text(widget.content)
                 ],
               ),
             ),

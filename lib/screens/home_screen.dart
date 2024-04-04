@@ -112,7 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => NewsDetailsScreen(
-                                  newImage: snapshot.data!.articles![index].url
+                                  newImage: snapshot
+                                      .data!.articles![index].urlToImage
                                       .toString(),
                                   newsTitle: snapshot
                                       .data!.articles![index].title
@@ -249,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Container(
             padding: const EdgeInsets.all(10),
-            height: height * 0.3,
+            height: height * 0.5,
             child: FutureBuilder<NewsChannelsHeadlinesModel>(
                 future: newsViewModel.fetchNewsChannelHeadlinesApi(),
                 builder: (BuildContext context, snapshot) {
@@ -275,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   MaterialPageRoute(
                                     builder: (context) => NewsDetailsScreen(
                                       newImage: snapshot
-                                          .data!.articles![index].url
+                                          .data!.articles![index].urlToImage
                                           .toString(),
                                       newsTitle: snapshot
                                           .data!.articles![index].title
@@ -304,11 +305,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(
-                                          'assets/images/free-nature-images.jpg',
-                                          height: height * 0.2,
-                                          width: width * 0.3,
-                                          fit: BoxFit.cover),
+                                      child: CachedNetworkImage(
+                                        height: height * 0.2,
+                                        width: width * 0.3,
+                                        imageUrl: snapshot
+                                            .data!.articles![index].urlToImage
+                                            .toString(),
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const SizedBox(child: spinKit2),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(
+                                          Icons.error_outline,
+                                          color: Colors.red,
+                                        ),
+                                      ),
                                     ),
                                     Spacer(),
                                     Container(
